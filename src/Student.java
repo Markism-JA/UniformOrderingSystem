@@ -298,10 +298,6 @@ public class Student extends javax.swing.JFrame {
     public void studentLogIn(String studentNum) {
 		String currentLine;
 		
-		//System.out.print("Enter your student number: ");
-		//String studentNum = input.nextLine();
-		
-
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader("StudentsSheet1.csv"));
 			

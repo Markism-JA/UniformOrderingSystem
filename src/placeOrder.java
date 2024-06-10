@@ -28,6 +28,7 @@ public class placeOrder extends javax.swing.JFrame {
     String uniformTypeArray[] = {};
     String otherType[] = {};
     String sizeArray[] = {"SMALL","MEDIUM","LARGE","XL","XXL"};
+    String currentChoice;
     
     public placeOrder() {
         initComponents();
@@ -338,11 +339,11 @@ public class placeOrder extends javax.swing.JFrame {
         try {
 	BufferedReader other = new BufferedReader(new FileReader("uniform stocks//PE & NSTP.csv"));		
         BufferedReader reader = new BufferedReader(new FileReader(StudentLogIn.studentDailyUniform));
-        //System.out.println(StudentLogIn.studentDailyUniform);
+ 
 	List<String> firstColumn = new ArrayList<>();
 	String line = reader.readLine();
 	String col;
-        //System.out.println(line == null);
+        
 	if (line != null) {
             String types[] = removeNulls(line.split(","));
             for(int i = 0; i <types.length;i++){
@@ -374,9 +375,9 @@ public class placeOrder extends javax.swing.JFrame {
         
         for(int i = 0; i < sizeArray.length; i++){
             size.addItem(sizeArray[i]);
-            System.out.println(i+". "+ sizeArray[i]);
+            //System.out.println(i+". "+ sizeArray[i]);
         }
-        //sizeArray = column;
+      
 		
 	reader.close();
         other.close();
@@ -420,7 +421,6 @@ public class placeOrder extends javax.swing.JFrame {
                 try {
                     FileWriter writer = new FileWriter("orders//Ongoing Orders.csv", true);
                     writer.write("\n"+ StudentLogIn.studentNo + "," + StudentLogIn.studentName + "," + typeLabel.getText() + "," + sizeLabel.getText() + "," + quantLabel.getText());
-                    System.out.println("New student added succesfully.\n");
                     writer.close();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -523,6 +523,7 @@ public class placeOrder extends javax.swing.JFrame {
             double discount = 0.01 * Double.parseDouble(StudentLogIn.studentDis);
             double total = quantity *((double)price - ((double)price * discount));
             totalLabel.setText(String.format("₱ %.2f", total));
+            currentChoice = "PE";
             
         }else if(uniform != null){
             uniformPrice(quantity,uniform,sizePrice);
@@ -583,16 +584,9 @@ public class placeOrder extends javax.swing.JFrame {
      
      public void uniformPrice(double quantity, String uniform, String sizePrice){
             String daily[][] = readCSV(StudentLogIn.pricePath);
-            System.out.println(StudentLogIn.pricePath);
-            System.out.println("uniform array:");
-            printArray(uniformTypeArray);
-            print2DArray(daily);
-            System.out.println("uniform: "+uniform);
-            System.out.println(findIndex(uniformTypeArray,uniform));
-            System.out.println(findIndex(sizeArray,sizePrice));
             int row = findIndex(uniformTypeArray,uniform)+1;
             int col = findIndex(sizeArray,sizePrice)+1;
-           
+            currentChoice = "DAILY";
             pakshit(row,col,daily,quantity);
            
      }
@@ -614,20 +608,41 @@ public class placeOrder extends javax.swing.JFrame {
      }
      
      public boolean stockChecker(){
-         String stock [][] = readCSV(StudentLogIn.studentDailyUniform);
+         String dailyStock [][] = readCSV(StudentLogIn.studentDailyUniform);
          
          int row = findIndex(uniformTypeArray,typeLabel.getText());
          int col = findIndex(sizeArray,sizeLabel.getText())+1;
          
-         System.out.println(row+"\n"+col);
-         System.out.println(stock[col][row]);
+         String otherStock [][] = readCSV("uniform stocks//PE & NSTP.csv");
          
-         if(stock[col][row].equals("0")){
-             return false;
-             //System.out.println("wala");
+         int row2 = findIndex(otherType,typeLabel.getText())+1;
+         //int col2 = findIndex(sizeArray,sizeLabel.getText())+1;
+         
+         if(currentChoice.equals("DAILY")){
+             if(dailyStock[col][row].equals("0")){
+                 return false;
+                    
+             }else{
+                 return true;
+             }
+         }else if(currentChoice.equals("PE")){
+             if(otherStock[col][row2].equals("0")){
+                 print(otherStock[col][row2]);
+                 return false;
+             }else{
+                 print(otherStock[col][row2]);
+                 return true;
+                 
+             }
          }else{
              return true;
+             
          }
+         
+     }
+     
+     public void print(String eme){
+         System.out.println(eme);
      }
 
 }

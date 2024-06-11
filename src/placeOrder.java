@@ -422,6 +422,7 @@ public class placeOrder extends javax.swing.JFrame {
                     FileWriter writer = new FileWriter("orders//Ongoing Orders.csv", true);
                     writer.write("\n"+ StudentLogIn.studentNo + "," + StudentLogIn.studentName + "," + typeLabel.getText() + "," + sizeLabel.getText() + "," + quantLabel.getText());
                     writer.close();
+                    System.out.println("emee");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

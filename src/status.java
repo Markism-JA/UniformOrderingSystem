@@ -159,16 +159,16 @@ public class status extends javax.swing.JFrame {
     }//GEN-LAST:event_backActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        String path ="orders\\Ongoing Orders.csv";
+        String path ="orders//Ongoing Orders.csv";
 		
 	try {
 			
-            BufferedReader reader = new BufferedReader(new FileReader(path));
-            String line = "";
+        BufferedReader reader = new BufferedReader(new FileReader(path));
+        String line = "";
 
-            ArrayList<String> list = new ArrayList<>();
-            System.out.println("Ongoing Orders List\n\n");
-            while((line = reader.readLine()) != null) {
+        ArrayList<String> list = new ArrayList<>();
+        System.out.println("Ongoing Orders List\n\n");
+        while((line = reader.readLine()) != null) {
 		String row [] = line.split(",");
                 if(row[0].equals(StudentLogIn.studentNo)){
                     //ongoing.setText(" " + row[4] +"  "+ row[2]+ "  "+ row[3] + " : UNPAID");

@@ -165,7 +165,7 @@ public class Admin {
 	}
         
         	static void printOngoingList() {
-		String path ="orders\\Ongoing Orders.csv";
+		String path ="orders//Ongoing Orders.csv";
 		
 		try {
 			
@@ -196,7 +196,7 @@ public class Admin {
 		int deleteLine = input.nextInt()+1;
 		
 		String tempFile = "temp.csv";
-		File oldFile = new File("orders\\Ongoing Orders.csv");
+		File oldFile = new File("orders//Ongoing Orders.csv");
 		File newFile = new File(tempFile);
 		
 		int line = 0;
@@ -207,7 +207,7 @@ public class Admin {
 			BufferedWriter bw = new BufferedWriter(new FileWriter(tempFile,true));
 			PrintWriter writer = new PrintWriter(bw);
 			//reader
-			BufferedReader reader = new BufferedReader(new FileReader("orders\\Ongoing Orders.csv"));
+			BufferedReader reader = new BufferedReader(new FileReader("orders//Ongoing Orders.csv"));
 			
 			while((currentLine = reader.readLine()) != null) {
 				line++;
@@ -226,7 +226,7 @@ public class Admin {
 			
 			//delete old file and rewrite it
 			oldFile.delete();
-			File dump = new File("orders\\Ongoing Orders.csv");
+			File dump = new File("orders//Ongoing Orders.csv");
 			newFile.renameTo(dump);
 			
 			
